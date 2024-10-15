@@ -2,16 +2,19 @@ package com.auction.product_service.controller;
 
 import com.auction.product_service.dto.ProductRequest;
 import com.auction.product_service.dto.ProductResponse;
+import com.auction.product_service.exception.ProductNotFoundException;
 import com.auction.product_service.model.Product;
 import com.auction.product_service.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -19,9 +22,29 @@ public class ProductController {
 
     @PostMapping("/create-product")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductResponse createProduct(@RequestBody ProductRequest productRequest) {
+    public Long createProduct(@RequestBody @Valid ProductRequest productRequest) {
         return productService.createProduct(productRequest);
     }
+
+    @PostMapping("/buy-now")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductResponse buyNow(@RequestBody @Valid ProductRequest productRequest) throws ProductNotFoundException {
+        return productService.buyNow(productRequest);
+    }
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductResponse> findByProductId(@PathVariable("productId") Long productId) {
+        ProductResponse productResponse = productService.findByProductId(productId);
+        return ResponseEntity.ok(productResponse);
+    }
+
+    /*
+    @GetMapping("/{product-id")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<ProductResponse> findByProductId(@PathVariable("product-id") Long productId) {
+        return ResponseEntity.ok(productService.findByProductId(productId));
+    }
+*/
 
     @GetMapping("/get-all-products")
     @ResponseStatus(HttpStatus.OK)

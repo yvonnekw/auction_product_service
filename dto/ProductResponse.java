@@ -3,8 +3,26 @@ package com.auction.product_service.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
 
-@Builder
-public record ProductResponse(Long productId, String productName, String brandName, String description, Double startingPrice, String colour, String size) {
+
+public record ProductResponse(
+        Long productId,
+        Long sellerId,
+        String productName,
+        String brandName,
+        String description,
+        BigDecimal startingPrice,
+        BigDecimal buyNowPrice,
+        String colour,
+        String productSize,
+        double quantity,
+        boolean isAvailableForBuyNow,
+        boolean isSold,
+        Long categoryId,
+        String categoryName,
+        String categoryDescription
+
+        ) {
 
 }
