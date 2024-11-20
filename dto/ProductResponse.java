@@ -3,18 +3,26 @@ package com.auction.product_service.dto;
 
 import lombok.*;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-public class ProductResponse {
-    private Long productId;
-    private String productName;
-    private String brandName;
-    private String description;
-    private String price;
-    private String colour;
-    private String size;
+import java.math.BigDecimal;
+
+
+public record ProductResponse(
+        Long productId,
+        Long sellerId,
+        String productName,
+        String brandName,
+        String description,
+        BigDecimal startingPrice,
+        BigDecimal buyNowPrice,
+        String colour,
+        String productSize,
+        double quantity,
+        boolean isAvailableForBuyNow,
+        boolean isSold,
+        Long categoryId,
+        String categoryName,
+        String categoryDescription
+
+        ) {
+
 }
